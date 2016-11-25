@@ -22,21 +22,19 @@ public class MoveOnMouseDrag : MonoBehaviour {
         if (Input.GetMouseButtonDown(1))
         {
             isDragging = true;
-            lastPosition = Input.mousePosition;
         }
         else if (Input.GetMouseButtonUp(1))
         {
             isDragging = false;
         }
 
+        Vector3 currentPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         if (isDragging)
         {
-            Vector3 delta = (Input.mousePosition - lastPosition)* Speed;
-            
-            transform.Translate(delta.x,0,delta.y);
-            Debug.Log(delta);
-            lastPosition = Input.mousePosition;
+            Vector3 delta = (currentPosition - lastPosition)* Speed;      
+            transform.Translate(delta);
         }
+        lastPosition = currentPosition;
     }
 
 }
