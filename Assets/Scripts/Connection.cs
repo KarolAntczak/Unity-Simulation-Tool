@@ -6,8 +6,8 @@ using System.Collections;
 /// </summary>
 public class Connection : MonoBehaviour {
 
-    private GameObject StartObject;
-    private GameObject EndObject;
+    public GameObject StartObject;
+    public GameObject EndObject;
 
 	void Update () {
         if (StartObject != null)
