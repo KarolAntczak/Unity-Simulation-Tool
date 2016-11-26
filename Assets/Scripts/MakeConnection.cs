@@ -34,5 +34,7 @@ public class MakeConnection : MonoBehaviour {
         EndObject = null;
 
         connection = Instantiate(ConnectionPrefab).GetComponent<Connection>();
+        connection.transform.parent = StartObject.transform;
+        connection.transform.localPosition = Vector3.zero;
     }
 }
