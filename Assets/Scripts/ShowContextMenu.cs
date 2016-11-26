@@ -17,9 +17,10 @@ public class ShowContextMenu : MonoBehaviour {
                 ContextMenu.SetActive(true);
                 ContextMenu.transform.position = Input.mousePosition;
             }
-        } else if (Input.GetMouseButtonDown(0))
-        {
-            ContextMenu.SetActive(false);
-        }
+            else
+            {
+                ContextMenu.SetActive(false);
+            }
+        } 
     }
 }
