@@ -16,12 +16,13 @@ public class SelectObject : MonoBehaviour {
         {     
             RaycastHit hit;
             var ray = Camera.main.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
-            if (selectionInstance == null && Physics.Raycast(ray, out hit))
+            if (selectionInstance == null && Physics.Raycast(ray, out hit) && hit.collider.gameObject == gameObject)
             {
                 selectionInstance = Instantiate(SelectionPrefab);
                 selectionInstance.transform.SetParent(transform);
                 selectionInstance.transform.localPosition = Vector3.zero;
                 SelectedObject = gameObject;
+                Debug.Log("Selected: " + SelectedObject.name);
             }
             else
             {
