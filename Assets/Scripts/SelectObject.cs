@@ -8,31 +8,29 @@ public class SelectObject : MonoBehaviour {
 
     public GameObject SelectionPrefab;
     private GameObject selectionInstance;
-
-    private bool selected = false;
+    public static GameObject SelectedObject;
 
     void Update()
     {
-        if (selected)
-        {
-            if (selectionInstance == null)
+        if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
+        {     
+            RaycastHit hit;
+            var ray = Camera.main.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
+            if (SelectedObject != gameObject && Physics.Raycast(ray, out hit))
             {
                 selectionInstance = Instantiate(SelectionPrefab);
                 selectionInstance.transform.SetParent(transform);
                 selectionInstance.transform.localPosition = Vector3.zero;
+                SelectedObject = gameObject;
+            }
+            else
+            {
+                if (SelectedObject == gameObject)
+                {
+                    SelectedObject = null;
+                }
+                Destroy(selectionInstance);
             }
         }
-        else if (Input.GetMouseButtonDown(0))
-        {
-            Destroy(selectionInstance);
-        }
-
-        selected = false;
     }
-
-    void OnMouseDown()
-    {
-        selected = true;
-    }
-
 }
