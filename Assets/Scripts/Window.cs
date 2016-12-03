@@ -2,9 +2,9 @@
 using UnityEngine;
 
 /// <summary>
-/// Context menu 
+/// Window
 /// </summary>
-public class ContextMenu : MonoBehaviour
+public class Window : MonoBehaviour
 {
     /// <summary>
     /// Show context menu in mouse position

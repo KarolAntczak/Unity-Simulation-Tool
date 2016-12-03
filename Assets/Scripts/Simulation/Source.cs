@@ -5,24 +5,28 @@ public class Source : MonoBehaviour {
 
     public GameObject RequestPrefab;
 
+    public IDistribution Distribution = new UniformDistribution();
+
+    private float nextRequestTime;
+
 	// Use this for initialization
 	void Start () {
-	
-	}
+        nextRequestTime = Time.fixedTime + Distribution.NextValue;
+    }
 	
 	// Update is called once per frame
 	void Update () {
-        //TODO: Add random-based intensity
-	    if (Time.fixedTime %2 ==0)
+
+	    if (Time.fixedTime > nextRequestTime)
         {
             List<Connection> cons = OutgoingConnections;
 
             if (cons.Count>0)
             {
-                //TODO: Add routing rules
                 Request request = Instantiate(RequestPrefab).GetComponent<Request>();
                 Connection con = cons[0];
                 request.Redirect(transform, con.EndObject.transform);
+                nextRequestTime = Time.fixedTime + Distribution.NextValue;
             }
 
         }
@@ -32,8 +36,7 @@ public class Source : MonoBehaviour {
     {
         get
         {
-            List<Connection> connections = new List<Connection>(GetComponentsInChildren<Connection>());
-            return connections.FindAll(con => con.StartObject == gameObject);
+            return new List<Connection>(GetComponentsInChildren<Connection>());
         }
     }
 }
