@@ -21,14 +21,15 @@ public class Source : MonoBehaviour {
         {
             List<Connection> cons = OutgoingConnections;
 
-            if (cons.Count>0)
+            foreach (Connection con in cons)
             {
-                Request request = Instantiate(RequestPrefab).GetComponent<Request>();
-                Connection con = cons[0];
-                request.Redirect(transform, con.EndObject.transform);
-                nextRequestTime = Time.fixedTime + Distribution.NextValue;
+                if (con.EndObject)
+                {
+                    Request request = Instantiate(RequestPrefab).GetComponent<Request>();
+                    request.Redirect(transform, con.EndObject.transform);
+                }
             }
-
+            nextRequestTime = Time.fixedTime + Distribution.NextValue;
         }
 	}
 

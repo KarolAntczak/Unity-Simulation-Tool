@@ -5,11 +5,14 @@
 /// </summary>
 public class ShowContextMenu : MonoBehaviour {
 
-    private Window ContextMenu;
+    private static Window ContextMenu;
 
     void Start()
     {
-        ContextMenu = GameObject.Find("ContextMenu").GetComponent<Window>();
+        if (!ContextMenu)
+        {
+            ContextMenu = GameObject.Find("ContextMenu").GetComponent<Window>();
+        }
     }
 
 	void Update () {
