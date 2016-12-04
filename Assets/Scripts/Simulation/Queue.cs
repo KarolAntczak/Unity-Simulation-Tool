@@ -26,13 +26,24 @@ public class Queue : Node {
         }
     }
 
+    public override void Reset()
+    {
+        requests.Clear();
+    }
+
     void Update()
     {
+        if (!Simulation.IsRunning)
+        {
+            return;
+        }
+
         if (requests.Count > 0)
         {
-            if (lastServingTime + 3 < Time.fixedTime )
+            float currentTime = Time.fixedTime * Simulation.Speed;
+            if (lastServingTime + ServingTime < currentTime)
             {
-                lastServingTime = Time.fixedTime;
+                lastServingTime = currentTime;
                 Request request = requests.Dequeue();
                 request.Redirect(RandomOutgoingConnection);
             }

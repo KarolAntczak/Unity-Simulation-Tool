@@ -15,6 +15,10 @@ public class Source : Node {
 	
 	// Update is called once per frame
 	void Update () {
+        if (!Simulation.IsRunning)
+        {
+            return;
+        }
 
         if (OutgoingConnections.Count > 0 && OutgoingConnections[0].EndObject)
         {

@@ -20,10 +20,15 @@ public class Request : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (!Simulation.IsRunning)
+        {
+            return;
+        }
+        
 	    if (To!=null)
         {
             transform.position = Vector3.Lerp(From.position, To.position, progress);
-            progress += Time.deltaTime * Speed;
+            progress += Time.deltaTime * Speed * Simulation.Speed;
 
             if (progress >=1)
             {

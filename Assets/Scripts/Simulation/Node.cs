@@ -14,6 +14,14 @@ public abstract class Node : MonoBehaviour {
     {
         request.Redirect(RandomOutgoingConnection);
     }
+
+    /// <summary>
+    /// Resets node to its starting state
+    /// </summary>
+    public virtual void Reset()
+    {
+
+    }
     
     /// <summary>
     /// List of connections coming out from this router
