@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
 
-public class Source : MonoBehaviour {
+public class Source : Router {
 
     public GameObject RequestPrefab;
 
@@ -17,27 +16,14 @@ public class Source : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-	    if (Time.fixedTime > nextRequestTime)
+        if (OutgoingConnections.Count > 0)
         {
-            List<Connection> cons = OutgoingConnections;
-
-            foreach (Connection con in cons)
+            if (Time.fixedTime > nextRequestTime)
             {
-                if (con.EndObject)
-                {
-                    Request request = Instantiate(RequestPrefab).GetComponent<Request>();
-                    request.Redirect(transform, con.EndObject.transform);
-                }
+                Request request = Instantiate(RequestPrefab).GetComponent<Request>();
+                Redirect(request);
+                nextRequestTime = Time.fixedTime + Distribution.NextValue;
             }
-            nextRequestTime = Time.fixedTime + Distribution.NextValue;
         }
 	}
-
-    List<Connection> OutgoingConnections
-    {
-        get
-        {
-            return new List<Connection>(GetComponentsInChildren<Connection>());
-        }
-    }
 }

@@ -27,15 +27,26 @@ public class Request : MonoBehaviour {
 
             if (progress >=1)
             {
-                Debug.Log("END: " + To.gameObject.name);
+                From = To;
+                transform.parent = From;
                 To.GetComponent<Router>().Redirect(this);
             }
         }
 	}
 
+    public void Stop()
+    {
+        To = null;
+    }
+
     public void Redirect(Transform to)
     {
         Redirect(To, to);
+    }
+
+    public void Redirect(Connection connection)
+    {
+        Redirect(connection.StartObject.transform, connection.EndObject.transform);
     }
 
     public void Redirect(Transform from, Transform to)
