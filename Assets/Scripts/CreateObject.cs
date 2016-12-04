@@ -20,6 +20,7 @@ public class CreateObject : MonoBehaviour {
     /// </summary>
 	public void Create()
     {
-        Instantiate(Prefab,Parent);
+        GameObject obj = (GameObject) Instantiate(Prefab,Parent);
+        obj.transform.localPosition = Prefab.transform.position;
     }
 }
