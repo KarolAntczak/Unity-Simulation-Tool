@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Source : Router {
+public class Source : Node {
 
     public GameObject RequestPrefab;
 
@@ -21,7 +21,7 @@ public class Source : Router {
             if (Time.fixedTime > nextRequestTime)
             {
                 Request request = Instantiate(RequestPrefab).GetComponent<Request>();
-                Redirect(request);
+                Process(request);
                 nextRequestTime = Time.fixedTime + Distribution.NextValue;
             }
         }

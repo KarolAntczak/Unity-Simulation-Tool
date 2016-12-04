@@ -29,7 +29,7 @@ public class Request : MonoBehaviour {
             {
                 From = To;
                 transform.parent = From;
-                To.GetComponent<Router>().Redirect(this);
+                To.GetComponent<Node>().Process(this);
             }
         }
 	}

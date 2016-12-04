@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// Enqueues requests and sends them further after some time. 
 /// </summary>
-public class Queue : Router {
+public class Queue : Node {
 
     public int ServingTime = 3;
     public int MaxRequestCount = 3;
@@ -13,7 +13,7 @@ public class Queue : Router {
 
     Queue<Request> requests = new Queue<Request>();
 
-    public override void Redirect(Request request)
+    public override void Process(Request request)
     {
         if (requests.Count < MaxRequestCount)
         {

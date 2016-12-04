@@ -4,17 +4,11 @@ using UnityEngine;
 /// <summary>
 /// Output consumes all incoming Requests, destroying them
 /// </summary>
-public class Output : Router {
+public class Output : Node {
 
-    public override void Redirect(Request request)
+    public override void Process(Request request)
     {
-        request.Redirect(transform,null);
+        Destroy(request);
     }
 
-    void Update () {
-	    foreach (Request request in GetComponentsInChildren<Request>())
-        {
-            Destroy(request);
-        }
-	}
 }

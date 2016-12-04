@@ -2,13 +2,15 @@
 using UnityEngine;
 
 
-//Routers redirets requests 
-public abstract class Router : MonoBehaviour {
+/// <summary>
+/// Basic simulation node. Can process requests be connected to other nodes. 
+/// </summary>
+public abstract class Node : MonoBehaviour {
 
     /// <summary>
-    /// Redirects given Request 
+    /// Processes given Request.
     /// </summary>
-    public virtual void Redirect(Request request)
+    public virtual void Process(Request request)
     {
         request.Redirect(RandomOutgoingConnection);
     }
