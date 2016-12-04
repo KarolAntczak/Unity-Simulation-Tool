@@ -22,7 +22,9 @@ public class Connection : MonoBehaviour {
             } 
             else
             {
-                lineRenderer.SetPosition(1, Camera.main.ScreenToWorldPoint(Input.mousePosition) - StartObject.transform.position);
+                Vector3 currentPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 8.4f));
+                currentPosition.y = 1f;
+                lineRenderer.SetPosition(1, currentPosition - StartObject.transform.position);
             }
         }       
     }

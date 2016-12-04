@@ -14,7 +14,7 @@ public class DragObject : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Vector3 currentPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 currentPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 8.4f));
         if (isDragging)
         {
             Vector3 delta = (currentPosition - lastPosition) * Speed;

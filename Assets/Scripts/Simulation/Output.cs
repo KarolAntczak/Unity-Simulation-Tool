@@ -9,7 +9,6 @@ public class Output : Router {
     public override void Redirect(Request request)
     {
         request.Redirect(transform,null);
-        Debug.Log("REDIRECT: " + gameObject.name);
     }
 
     void Update () {

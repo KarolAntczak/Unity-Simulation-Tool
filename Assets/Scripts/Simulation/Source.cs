@@ -16,7 +16,7 @@ public class Source : Router {
 	// Update is called once per frame
 	void Update () {
 
-        if (OutgoingConnections.Count > 0)
+        if (OutgoingConnections.Count > 0 && OutgoingConnections[0].EndObject)
         {
             if (Time.fixedTime > nextRequestTime)
             {
