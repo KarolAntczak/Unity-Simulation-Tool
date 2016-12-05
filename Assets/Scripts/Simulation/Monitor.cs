@@ -10,6 +10,7 @@ public class Monitor : Node {
 
     public override void Process(Request request)
     {
+        base.Process(request);
         RequestsProcessed++;
         RequestsIntensity = RequestsProcessed / Time.fixedTime;
     }
