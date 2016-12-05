@@ -8,6 +8,7 @@ public class QueueParamsController : MonoBehaviour {
 
     public Dropdown QueuingDropdown;
     public InputField MaxLengthInput;
+    public InputField ProcessingTimeInput;
 
     public void Load()
     {
@@ -28,6 +29,7 @@ public class QueueParamsController : MonoBehaviour {
         }
 
         MaxLengthInput.text = queue.MaxRequestCount.ToString();
+        ProcessingTimeInput.text = queue.ServingTime.ToString();
     }
 
     public void Apply()
@@ -48,5 +50,6 @@ public class QueueParamsController : MonoBehaviour {
         }
 
         queue.MaxRequestCount = int.Parse(MaxLengthInput.text);
+        queue.ServingTime = int.Parse(ProcessingTimeInput.text);
     }
 }
