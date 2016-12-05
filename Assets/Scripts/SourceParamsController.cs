@@ -2,9 +2,9 @@
 using UnityEngine.UI;
 
 /// <summary>
-/// Set parameters fields visibility
+/// Controller for source parameters 
 /// </summary>
-public class DistributionParamsController : MonoBehaviour {
+public class SourceParamsController : MonoBehaviour {
 
     public GameObject MinInput;
     public GameObject MaxInput;

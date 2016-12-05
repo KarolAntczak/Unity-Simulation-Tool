@@ -11,13 +11,18 @@ public class Queue : Node {
 
     private float lastServingTime = 0;
 
-    Queue<Request> requests = new Queue<Request>();
+    List<Request> requests = new List<Request>();
+
+    /// <summary>
+    /// Queuing strategy
+    /// </summary>
+    public IQueuing<Request> Queuing = new RandomQueue<Request>();
 
     public override void Process(Request request)
     {
         if (requests.Count < MaxRequestCount)
         {
-            requests.Enqueue(request);
+            requests.Add(request);
             request.Stop();
         } 
         else
@@ -44,9 +49,17 @@ public class Queue : Node {
             if (lastServingTime + ServingTime < currentTime)
             {
                 lastServingTime = currentTime;
-                Request request = requests.Dequeue();
+                Request request = NextRequest;
                 request.Redirect(RandomOutgoingConnection);
             }
+        }
+    }
+
+    Request NextRequest
+    {
+        get
+        {
+            return Queuing.GetNextElement(requests);
         }
     }
 
