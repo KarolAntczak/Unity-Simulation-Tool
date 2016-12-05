@@ -24,7 +24,7 @@ public class SelectObject : MonoBehaviour {
                 SelectedObject = gameObject;
                 Debug.Log("Selected: " + SelectedObject.name);
             }
-            else
+            else if (Input.GetMouseButtonDown(0))
             {
                 Destroy(selectionInstance);
             }
