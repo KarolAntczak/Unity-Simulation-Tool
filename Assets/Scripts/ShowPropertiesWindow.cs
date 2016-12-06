@@ -9,6 +9,7 @@ public class ShowPropertiesWindow : MonoBehaviour {
     public Window QueueProperties;
     public Window OutputProperties;
     public Window MonitorProperties;
+    public Window RouterProperties;
 
     /// <summary>
     /// Show appropriate properties window
@@ -19,20 +20,32 @@ public class ShowPropertiesWindow : MonoBehaviour {
 
         if (selected.GetComponent<Source>())
         {
-            SourceProperties.Show();
+            ShowWindow(SourceProperties);
         }
         else if (selected.GetComponent<Queue>())
         {
-            QueueProperties.Show();
+            ShowWindow(QueueProperties);
         }
         else if (selected.GetComponent<Monitor>())
         {
-            MonitorProperties.Show();
+            ShowWindow(MonitorProperties);
         }
         else if (selected.GetComponent<Output>())
         {
-            OutputProperties.Show();
+            ShowWindow(OutputProperties);
+        }
+        else if (selected.GetComponent<Router>())
+        {
+            ShowWindow(RouterProperties);
         }
     }
-
+    
+    private void ShowWindow(Window window)
+    {
+        if (window == null)
+        {
+            Debug.LogError("Trying to show null window!");
+        }
+        window.Show();
+    }
 }
