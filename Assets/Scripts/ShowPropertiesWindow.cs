@@ -45,6 +45,7 @@ public class ShowPropertiesWindow : MonoBehaviour {
         if (window == null)
         {
             Debug.LogError("Trying to show null window!");
+            return;
         }
         window.Show();
     }

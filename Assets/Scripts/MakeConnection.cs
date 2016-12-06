@@ -15,16 +15,33 @@ public class MakeConnection : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
-	
+	void Update ()
+    {
+        if (Input.GetMouseButtonDown(1) && connection != null)
+        {
+            // Cancel selection
+            StartObject = null;
+            EndObject = null;
+            Object.Destroy(connection.gameObject);
+        }
+
+
         if (StartObject!=null && EndObject==null)
         {
             if (SelectObject.SelectedObject != StartObject)
             {
                 EndObject = SelectObject.SelectedObject;
+                connection.GetComponent<Connection>().SetConnection(StartObject, EndObject);
                 Debug.Log("Created connection: " + StartObject + ", " + EndObject);
+
+                StartObject = null;
+                EndObject = null;
+                connection = null;
             }
-            connection.GetComponent<Connection>().SetConnection(StartObject, EndObject);
+            else
+            {
+                connection.GetComponent<Connection>().SetConnection(StartObject, null);
+            }
         }
 	}
 

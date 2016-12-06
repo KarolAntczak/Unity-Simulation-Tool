@@ -11,9 +11,11 @@ public class Connection : MonoBehaviour {
     public GameObject EndObject;
 
 	void Update () {
+        var lineRenderer = GetComponent<LineRenderer>();
+
         if (StartObject != null)
         {
-            var lineRenderer = GetComponent<LineRenderer>();
+            // zero because it is instantiated as direct child under source node
             lineRenderer.SetPosition(0, Vector3.zero);
             
             if (EndObject != null)
@@ -22,12 +24,15 @@ public class Connection : MonoBehaviour {
             } 
             else
             {
-                Vector3 currentPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 8.4f));
-                //FIXME: remove hardcoded position values
-                currentPosition.y = 1f;
+                var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                var xy = new Plane(Vector3.up, new Vector3(0, 1, 0));
+                float distance;
+                xy.Raycast(ray, out distance);
+                var currentPosition = ray.GetPoint(distance);
+                currentPosition.y = StartObject.transform.position.y;
                 lineRenderer.SetPosition(1, currentPosition - StartObject.transform.position);
             }
-        }       
+        }
     }
 
     public void SetConnection(GameObject start, GameObject end)
