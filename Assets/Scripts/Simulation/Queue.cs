@@ -6,12 +6,18 @@ using UnityEngine;
 /// </summary>
 public class Queue : Node {
 
-    public int ServingTime = 3;
+    public IDistribution ServingDistribution = new DeterministicDistribution();
     public int MaxRequestCount = 3;
 
+    private float servingTime = 0;
     private float lastServingTime = 0;
 
     List<Request> requests = new List<Request>();
+
+    public Queue()
+    {
+        servingTime = ServingDistribution.NextValue;
+    }
 
     /// <summary>
     /// Queuing strategy
@@ -46,11 +52,12 @@ public class Queue : Node {
         if (requests.Count > 0)
         {
             float currentTime = Time.fixedTime * Simulation.Speed;
-            if (lastServingTime + ServingTime < currentTime)
+            if (lastServingTime + servingTime < currentTime)
             {
                 lastServingTime = currentTime;
                 Request request = NextRequest;
                 request.Redirect(RandomOutgoingConnection);
+                servingTime = ServingDistribution.NextValue;
             }
         }
     }
@@ -63,4 +70,9 @@ public class Queue : Node {
         }
     }
 
+    public void SetServingDistribution(IDistribution distribution)
+    {
+        ServingDistribution = distribution;
+        servingTime = ServingDistribution.NextValue;
+    }
 }

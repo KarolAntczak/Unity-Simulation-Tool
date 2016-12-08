@@ -8,7 +8,7 @@ public class QueueParamsController : MonoBehaviour {
 
     public Dropdown QueuingDropdown;
     public InputField MaxLengthInput;
-    public InputField ProcessingTimeInput;
+    public GameObject DistributionParamsController;
 
     public void Load()
     {
@@ -29,7 +29,7 @@ public class QueueParamsController : MonoBehaviour {
         }
 
         MaxLengthInput.text = queue.MaxRequestCount.ToString();
-        ProcessingTimeInput.text = queue.ServingTime.ToString();
+        DistributionParamsController.GetComponent<DistributionParamsController>().SetDistribution(queue.ServingDistribution);
     }
 
     public void Apply()
@@ -50,6 +50,6 @@ public class QueueParamsController : MonoBehaviour {
         }
 
         queue.MaxRequestCount = int.Parse(MaxLengthInput.text);
-        queue.ServingTime = int.Parse(ProcessingTimeInput.text);
+        queue.SetServingDistribution(DistributionParamsController.GetComponent<DistributionParamsController>().GetDistribution());
     }
 }
