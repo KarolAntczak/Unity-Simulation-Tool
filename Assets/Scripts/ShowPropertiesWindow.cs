@@ -10,6 +10,7 @@ public class ShowPropertiesWindow : MonoBehaviour {
     public Window OutputProperties;
     public Window MonitorProperties;
     public Window RouterProperties;
+    public Window ConnectionProperties;
 
     /// <summary>
     /// Show appropriate properties window
@@ -37,6 +38,10 @@ public class ShowPropertiesWindow : MonoBehaviour {
         else if (selected.GetComponent<Router>())
         {
             ShowWindow(RouterProperties);
+        }
+        else if (selected.GetComponent<Connection>())
+        {
+            ShowWindow(ConnectionProperties);
         }
     }
     

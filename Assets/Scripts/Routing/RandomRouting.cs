@@ -1,12 +1,29 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class RandomRouting<T> : IRouting<T> {
+public class RandomRouting : IRouting<Connection> {
 
-    public T GetNextElement(List<T> list)
+    public Connection GetNextElement(List<Connection> list)
     {
-        int index = Random.Range(0, list.Count);
-        T element = list[index];
-        return element;
+        float sumOfProbabilities = 0;
+        foreach(Connection connection in list)
+        {
+            sumOfProbabilities += connection.RedirectingProbability;
+        }
+        
+        float random = Random.Range(0, sumOfProbabilities);
+        float step = 0;
+
+        foreach (Connection connection in list)
+        {
+            step += connection.RedirectingProbability;
+
+            if (step > random)
+            {
+                return connection;
+            }
+        }
+
+        return null; // Should not happen
     }
 }

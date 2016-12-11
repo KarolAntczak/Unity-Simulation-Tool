@@ -10,6 +10,11 @@ public class Connection : MonoBehaviour {
     public Transform StartObject;
     public Transform EndObject;
 
+    /// <summary>
+    /// Probability of redirecting request to this connection
+    /// </summary>
+    public float RedirectingProbability = 1;
+
 	void Update () {
         if (StartObject != null)
         {

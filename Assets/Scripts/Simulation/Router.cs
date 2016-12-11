@@ -8,7 +8,11 @@ public class Router : Node {
 
     public override void Process(Request request)
     {
-        request.Redirect(RoutedConnection);
+        var routedConnection = RoutedConnection;
+        if (routedConnection != null)
+        {
+            request.Redirect(RoutedConnection);
+        }
     }
 
     public Connection RoutedConnection

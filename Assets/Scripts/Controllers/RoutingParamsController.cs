@@ -10,7 +10,7 @@ public class RoutingParamsController : MonoBehaviour
         Router router = SelectObject.SelectedObject.GetComponent<Router>();
         IRouting<Connection> routingStrategy = router.RoutingStrategy;
 
-        if (routingStrategy is RandomRouting<Connection>)
+        if (routingStrategy is RandomRouting)
         {
             RoutingDropdown.value = 0;
             RoutingDropdown.captionText.text = "Random";
@@ -26,7 +26,7 @@ public class RoutingParamsController : MonoBehaviour
         Router router = SelectObject.SelectedObject.GetComponent<Router>();
         if (RoutingDropdown.captionText.text.Equals("Random"))
         {
-            router.RoutingStrategy = new RandomRouting<Connection>();
+            router.RoutingStrategy = new RandomRouting();
         } else if (RoutingDropdown.captionText.text.Equals("Round Robin"))
         {
             router.RoutingStrategy = new RoundRobinRouting<Connection>();
