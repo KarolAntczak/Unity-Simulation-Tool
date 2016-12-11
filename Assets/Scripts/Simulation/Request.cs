@@ -51,7 +51,7 @@ public class Request : MonoBehaviour {
 
     public void Redirect(Connection connection)
     {
-        Redirect(connection.StartObject.transform, connection.EndObject.transform);
+        Redirect(connection.StartObject, connection.EndObject);
     }
 
     public void Redirect(Transform from, Transform to)

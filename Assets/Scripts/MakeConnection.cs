@@ -3,8 +3,8 @@ using System.Collections;
 
 public class MakeConnection : MonoBehaviour {
 
-    private GameObject StartObject;
-    private GameObject EndObject;
+    private Transform StartObject;
+    private Transform EndObject;
 
     public GameObject ConnectionPrefab;
 
@@ -22,15 +22,15 @@ public class MakeConnection : MonoBehaviour {
             // Cancel selection
             StartObject = null;
             EndObject = null;
-            Object.Destroy(connection.gameObject);
+            Destroy(connection.gameObject);
         }
 
 
         if (StartObject!=null && EndObject==null)
         {
-            if (SelectObject.SelectedObject != StartObject)
+            if (SelectObject.SelectedObject.transform != StartObject)
             {
-                EndObject = SelectObject.SelectedObject;
+                EndObject = SelectObject.SelectedObject.transform;
                 connection.GetComponent<Connection>().SetConnection(StartObject, EndObject);
                 Debug.Log("Created connection: " + StartObject + ", " + EndObject);
 
@@ -47,7 +47,7 @@ public class MakeConnection : MonoBehaviour {
 
     public void SelectStartObject()
     {
-        StartObject = SelectObject.SelectedObject;
+        StartObject = SelectObject.SelectedObject.transform;
         EndObject = null;
 
         connection = Instantiate(ConnectionPrefab).GetComponent<Connection>();

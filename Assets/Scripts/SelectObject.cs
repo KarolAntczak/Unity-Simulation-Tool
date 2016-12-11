@@ -21,7 +21,8 @@ public class SelectObject : MonoBehaviour {
                 selectionInstance = Instantiate(SelectionPrefab);
                 selectionInstance.transform.SetParent(transform);
                 selectionInstance.transform.localPosition = Vector3.zero;
-                SelectedObject = gameObject;
+                selectionInstance.transform.localRotation = Quaternion.identity;
+                 SelectedObject = gameObject;
                 Debug.Log("Selected: " + SelectedObject.name);
             }
             else if (Input.GetMouseButtonDown(0))

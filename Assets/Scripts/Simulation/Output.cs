@@ -8,7 +8,7 @@ public class Output : Node {
 
     public override void Process(Request request)
     {
-        Destroy(request);
+        Destroy(request.gameObject);
     }
 
 }

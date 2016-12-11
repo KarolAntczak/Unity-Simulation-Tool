@@ -49,7 +49,7 @@ public class Queue : Node {
             return;
         }
 
-        if (requests.Count > 0)
+        if (requests.Count > 0 && OutgoingConnections.Count > 0)
         {
             float currentTime = Time.fixedTime * Simulation.Speed;
             if (lastServingTime + servingTime < currentTime)

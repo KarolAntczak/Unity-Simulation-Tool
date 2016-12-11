@@ -24,7 +24,7 @@ public abstract class Node : MonoBehaviour {
     }
     
     /// <summary>
-    /// List of connections coming out from this router
+    /// List of connections coming out from this node
     /// </summary>
     public List<Connection> OutgoingConnections
     {
@@ -43,6 +43,31 @@ public abstract class Node : MonoBehaviour {
         {
             List<Connection> connections = OutgoingConnections;
             return connections[Random.Range(0, connections.Count)];
+        }
+    }
+
+    /// <summary>
+    /// List of connections coming in to this node
+    /// </summary>
+    public List<Connection> IncomingConnections
+    {
+        get
+        {
+            var connections = new List<Connection>(FindObjectsOfType<Connection>());
+            return connections.FindAll( (Connection connection) => connection.EndObject == transform );
+        }
+    }
+
+    /// <summary>
+    /// Destroy all incoming connection when destroying this node
+    /// </summary>
+    void OnDestroy()
+    {
+        var incomingConnections = IncomingConnections;
+
+        foreach (var connection in incomingConnections)
+        {
+            Destroy(connection.gameObject);
         }
     }
 }

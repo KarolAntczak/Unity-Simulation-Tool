@@ -7,20 +7,15 @@ using System.Collections;
 [ExecuteInEditMode]
 public class Connection : MonoBehaviour {
 
-    public GameObject StartObject;
-    public GameObject EndObject;
+    public Transform StartObject;
+    public Transform EndObject;
 
 	void Update () {
-        var lineRenderer = GetComponent<LineRenderer>();
-
         if (StartObject != null)
         {
-            // zero because it is instantiated as direct child under source node
-            lineRenderer.SetPosition(0, Vector3.zero);
-            
             if (EndObject != null)
             {
-                lineRenderer.SetPosition(1, EndObject.transform.position - StartObject.transform.position);
+                updateLine(StartObject.position, EndObject.position);
             } 
             else
             {
@@ -29,15 +24,40 @@ public class Connection : MonoBehaviour {
                 float distance;
                 xy.Raycast(ray, out distance);
                 var currentPosition = ray.GetPoint(distance);
-                currentPosition.y = StartObject.transform.position.y;
-                lineRenderer.SetPosition(1, currentPosition - StartObject.transform.position);
+                currentPosition.y = StartObject.position.y;
+                updateLine(StartObject.position, currentPosition);
             }
         }
     }
 
-    public void SetConnection(GameObject start, GameObject end)
+    /// <summary>
+    /// Updates line renderer and collider
+    /// </summary>
+    /// <param name="startPosition">Line start</param>
+    /// <param name="endPosition">Line end</param>
+    private void updateLine(Vector3 startPosition, Vector3 endPosition)
+    {
+        Vector3 center = Vector3.Lerp(startPosition, endPosition, 0.5f);
+        transform.position = center;
+
+        var lineRenderer = GetComponent<LineRenderer>();        
+        var length = Vector3.Distance(startPosition, endPosition);
+
+        // connection pivot is between start position and end position
+        lineRenderer.SetPosition(0, Vector3.back * length * 0.5f);
+        lineRenderer.SetPosition(1, Vector3.forward * length * 0.5f);
+
+        transform.LookAt(endPosition);
+
+        CapsuleCollider collider = GetComponent<CapsuleCollider>();
+        collider.height = length;
+    }
+
+    public void SetConnection(Transform start, Transform end)
     {
         StartObject = start;
         EndObject = end;
+        CapsuleCollider collider = GetComponent<CapsuleCollider>();
+        collider.enabled = (EndObject != null);
     }
 }
