@@ -6,6 +6,8 @@ using UnityEngine;
 /// </summary>
 public class Queue : Node {
 
+    private readonly int ServingSlotsCount = 1;
+
     public IDistribution ServingDistribution = new DeterministicDistribution();
     public int MaxRequestCount = 3;
 
@@ -13,6 +15,11 @@ public class Queue : Node {
     private float lastServingTime = 0;
 
     List<Request> requests = new List<Request>();
+
+    private float totalRequestCount = 0f;
+    private float totalProcessingTime = 0f;
+
+    private float requestInQueueCount = 0f;
 
     public Queue()
     {
@@ -30,6 +37,7 @@ public class Queue : Node {
         {
             requests.Add(request);
             request.Stop();
+            NumberInQueueChanged();
         } 
         else
         {
@@ -39,6 +47,9 @@ public class Queue : Node {
 
     public override void Reset()
     {
+        totalRequestCount = 0f;
+        totalProcessingTime = 0f;
+        requestInQueueCount = 0f;
         requests.Clear();
     }
 
@@ -57,6 +68,10 @@ public class Queue : Node {
                 lastServingTime = currentTime;
                 Request request = NextRequest;
                 request.Redirect(RandomOutgoingConnection);
+
+                totalRequestCount++;
+                totalProcessingTime += servingTime;
+                NumberInQueueChanged();
                 servingTime = ServingDistribution.NextValue;
             }
         }
@@ -74,5 +89,31 @@ public class Queue : Node {
     {
         ServingDistribution = distribution;
         servingTime = ServingDistribution.NextValue;
+    }
+
+    public float MeanRequestProcessingTime
+    {
+        get
+        {
+            if (totalRequestCount == 0)
+            {
+                return 0f;
+            }
+            return totalProcessingTime / totalRequestCount;
+        }
+    }
+
+    public float MeanRequestCount
+    {
+        get
+        {
+            return requestInQueueCount / Simulation.TotalTime;
+        }
+    }
+
+    private void NumberInQueueChanged()
+    {
+        // one request is always being processed and not in queue
+        requestInQueueCount += (requests.Count > ServingSlotsCount ? (requests.Count - ServingSlotsCount) : 0);
     }
 }
