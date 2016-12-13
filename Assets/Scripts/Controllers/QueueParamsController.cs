@@ -17,14 +17,17 @@ public class QueueParamsController : MonoBehaviour {
 
         if (queuing is Fifo<Request>)
         {
+            QueuingDropdown.value = 0;
             QueuingDropdown.captionText.text = "FIFO";
         }
         else if (queuing is Lifo<Request>)
         {
+            QueuingDropdown.value = 1;
             QueuingDropdown.captionText.text = "LIFO";
         }
         else if (queuing is RandomQueue<Request>)
         {
+            QueuingDropdown.value = 2;
             QueuingDropdown.captionText.text = "Random";
         }
 

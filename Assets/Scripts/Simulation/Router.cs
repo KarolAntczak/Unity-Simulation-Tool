@@ -11,7 +11,7 @@ public class Router : Node {
         var routedConnection = RoutedConnection;
         if (routedConnection != null)
         {
-            request.Redirect(RoutedConnection);
+            request.Redirect(routedConnection);
         }
     }
 
@@ -20,7 +20,8 @@ public class Router : Node {
         get
         {
             List<Connection> connections = OutgoingConnections;
-            return RoutingStrategy.GetNextElement(connections);
+            Connection next = RoutingStrategy.GetNextElement(connections);
+            return next;
         }
     }
 }

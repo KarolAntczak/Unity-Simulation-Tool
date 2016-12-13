@@ -16,7 +16,8 @@ public class SelectObject : MonoBehaviour {
         {     
             RaycastHit hit;
             var ray = Camera.main.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
-            if (selectionInstance == null && Physics.Raycast(ray, out hit) && hit.collider.gameObject == gameObject)
+            if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject() == false &&
+                selectionInstance == null && Physics.Raycast(ray, out hit) && hit.collider.gameObject == gameObject)
             {
                 selectionInstance = Instantiate(SelectionPrefab);
                 selectionInstance.transform.SetParent(transform);
