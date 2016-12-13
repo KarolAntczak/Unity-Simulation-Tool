@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// Shows appropriate properties window for selected object
@@ -7,8 +8,6 @@ public class ShowPropertiesWindow : MonoBehaviour {
 
     public Window SourceProperties;
     public Window QueueProperties;
-    public Window OutputProperties;
-    public Window MonitorProperties;
     public Window RouterProperties;
     public Window ConnectionProperties;
 
@@ -26,14 +25,6 @@ public class ShowPropertiesWindow : MonoBehaviour {
         else if (selected.GetComponent<Queue>())
         {
             ShowWindow(QueueProperties);
-        }
-        else if (selected.GetComponent<Monitor>())
-        {
-            ShowWindow(MonitorProperties);
-        }
-        else if (selected.GetComponent<Output>())
-        {
-            ShowWindow(OutputProperties);
         }
         else if (selected.GetComponent<Router>())
         {
@@ -53,5 +44,17 @@ public class ShowPropertiesWindow : MonoBehaviour {
             return;
         }
         window.Show();
+    }
+
+    public void Enable()
+    {
+        GameObject selected = SelectObject.SelectedObject;
+
+        GetComponent<Button>().interactable = selected &&
+             (  selected.GetComponent<Source>()
+             || selected.GetComponent<Queue>()
+             || selected.GetComponent<Router>()
+             || selected.GetComponent<Connection>()
+             );
     }
 }
