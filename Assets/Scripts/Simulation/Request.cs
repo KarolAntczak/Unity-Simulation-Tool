@@ -11,12 +11,13 @@ public class Request : MonoBehaviour {
     public Transform From;
     public Transform To;
 
-    private float progress = 0;
+    private float progress = 0f;
+    private float startTime = 0f;
 
 	// Use this for initialization
 	void Start () {
-	
-	}
+        startTime = Simulation.TotalTime;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -60,5 +61,12 @@ public class Request : MonoBehaviour {
         From = from;
         To = to;
         progress = 0;
+    }
+
+    public float ProcessingTime
+    {
+        get {
+            return Simulation.TotalTime - startTime;
+        }
     }
 }

@@ -5,6 +5,7 @@ public class ShowStatisticsWindow : MonoBehaviour {
 
     public Window QueueStatisticsWindow;
     public Window MonitorStatisticsWindow;
+    public Window OutputProperties;
 
     public void Show()
     {
@@ -18,12 +19,17 @@ public class ShowStatisticsWindow : MonoBehaviour {
         {
             QueueStatisticsWindow.Show();
         }
+        else if (selected.GetComponent<Output>())
+        {
+            OutputProperties.Show();
+        }
     }
 
     public void Enable()
     {
         GetComponent<Button>().interactable = SelectObject.SelectedObject != null && 
             (SelectObject.SelectedObject.GetComponent<Queue>() != null 
-          || SelectObject.SelectedObject.GetComponent<Monitor>() != null ) ;
+          || SelectObject.SelectedObject.GetComponent<Monitor>() != null 
+          || SelectObject.SelectedObject.GetComponents<Output>() != null) ;
     }
 }
